@@ -11,5 +11,8 @@
     "url": "https://github.com/Hoi15A/wynn.js.git"
   },
   "author": "Austin Albrecht",
-  "license": "AGPL-3.0"
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "node-fetch": "^2.3.0"
+  }
 }
