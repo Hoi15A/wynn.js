@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 const baseUrl = 'https://api.wynncraft.com/'
 
 async function get (username) {
-  let res = await fetch(`v2/${baseUrl}player/${username}/stats`)
+  let res = await fetch(`${baseUrl}v2/player/${username}/stats`)
   return res.json()
 }
 
