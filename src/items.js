@@ -19,7 +19,11 @@ const categories = [
 async function getCategoryItems (category) {
   if (categories.includes(category)) {
     let res = await fetch(`${baseUrl}action=itemDB&category=${category}`)
-    return res.json()
+    if (res.ok) {
+      return res.json()
+    } else {
+      throw await res.json()
+    }
   } else {
     throw new Error('Invalid item category')
   }
@@ -32,8 +36,11 @@ function getCategories () {
 async function search (item) {
   console.log(item)
   let res = await fetch(`${baseUrl}action=itemDB&search=${item}`)
-  let data = await res.json()
-  return data
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw await res.json()
+  }
 }
 
 module.exports = {
