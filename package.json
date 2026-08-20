@@ -2,9 +2,14 @@
   "name": "wynn.js",
   "version": "0.0.3",
   "description": "Simple Wynncraft API wrapper",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "node ./node_modules/standard/bin/cmd.js"
+    "build": "tsc",
+    "test-players": "tsx tests/players.test.ts",
+    "test-playersearch": "tsx tests/playerSearch.test.ts",
+    "test-guilds": "tsx tests/guilds.test.ts",
+    "test-items": "tsx tests/items.test.ts"
   },
   "repository": {
     "type": "git",
@@ -13,9 +18,12 @@
   "author": "Austin Albrecht",
   "license": "AGPL-3.0",
   "dependencies": {
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
-    "standard": "^12.0.1"
+    "@types/node": "^26.2.0",
+    "@types/node-fetch": "^2.6.13",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
   }
 }
