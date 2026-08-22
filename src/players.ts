@@ -1,5 +1,5 @@
-import fetch from 'node-fetch'
 import { API_BASE_URL } from './config.js'
+import { fetchApiJson } from './http.js'
 
 import type { WynncraftPlayer, WynncraftPlayerCharacter } from './types/playerTypes.js'
 
@@ -8,31 +8,10 @@ export async function getPlayer(username: string, fullResult: boolean = false): 
     throw new TypeError('Username must be a non-empty string')
   }
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/player/${encodeURIComponent(username)}${fullResult ? '?fullResult' : ''}`)
-
-    if (res.status === 404) {
-      throw new Error(`Player "${username}" not found`)
-    }
-
-    if (res.status === 429) {
-      throw new Error('Rate limit exceeded. Try again later.')
-    }
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
-    }
-
-    return (await res.json()) as WynncraftPlayer
-  } catch (err) {
-    if (
-      err instanceof Error &&
-      (err.message.includes('ENOTFOUND') || err.message.includes('ECONNREFUSED'))
-    ) {
-      throw new Error('Unable to reach Wynncraft API. Check your connection.')
-    }
-    throw err
-  }
+  return fetchApiJson<WynncraftPlayer>(
+    `${API_BASE_URL}/player/${encodeURIComponent(username)}${fullResult ? '?fullResult' : ''}`,
+    `Player "${username}" not found`,
+  )
 }
 
 export async function getCharacters(username: string): Promise<Record<string, WynncraftPlayerCharacter>> {
@@ -40,31 +19,10 @@ export async function getCharacters(username: string): Promise<Record<string, Wy
     throw new TypeError('Username must be a non-empty string')
   }
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/player/${encodeURIComponent(username)}/characters`)
-
-    if (res.status === 404) {
-      throw new Error(`Player "${username}" not found`)
-    }
-
-    if (res.status === 429) {
-      throw new Error('Rate limit exceeded. Try again later.')
-    }
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
-    }
-
-    return (await res.json()) as Record<string, WynncraftPlayerCharacter>
-  } catch (err) {
-    if (
-      err instanceof Error &&
-      (err.message.includes('ENOTFOUND') || err.message.includes('ECONNREFUSED'))
-    ) {
-      throw new Error('Unable to reach Wynncraft API. Check your connection.')
-    }
-    throw err
-  }
+  return fetchApiJson<Record<string, WynncraftPlayerCharacter>>(
+    `${API_BASE_URL}/player/${encodeURIComponent(username)}/characters`,
+    `Player "${username}" not found`,
+  )
 }
 
 export async function searchPlayers(username: string): Promise<string[]> {
@@ -72,26 +30,9 @@ export async function searchPlayers(username: string): Promise<string[]> {
     throw new TypeError('Username must be a non-empty string')
   }
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/search/${encodeURIComponent(username)}?only=players`)
+  const data = await fetchApiJson<{ players: Record<string, { username: string }> }>(
+    `${API_BASE_URL}/search/${encodeURIComponent(username)}?only=players`,
+  )
 
-    if (res.status === 429) {
-      throw new Error('Rate limit exceeded. Try again later.')
-    }
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
-    }
-
-    const data = (await res.json()) as { players: Record<string, { username: string }> }
-    return Object.values(data.players).map(player => player.username)
-  } catch (err) {
-    if (
-      err instanceof Error &&
-      (err.message.includes('ENOTFOUND') || err.message.includes('ECONNREFUSED'))
-    ) {
-      throw new Error('Unable to reach Wynncraft API. Check your connection.')
-    }
-    throw err
-  }
+  return Object.values(data.players).map(player => player.username)
 }

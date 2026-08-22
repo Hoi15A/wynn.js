@@ -17,13 +17,12 @@
   },
   "author": "Austin Albrecht",
   "license": "AGPL-3.0",
-  "dependencies": {
-    "node-fetch": "^2.7.0"
-  },
   "devDependencies": {
     "@types/node": "^26.2.0",
-    "@types/node-fetch": "^2.6.13",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
