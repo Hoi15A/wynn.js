@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import { API_BASE_URL } from './config.js'
 
-import type { WynncraftPlayer } from './types/playerTypes.js'
+import type { WynncraftPlayer, WynncraftPlayerCharacter } from './types/playerTypes.js'
 
 export async function getPlayer(username: string, fullResult: boolean = false): Promise<WynncraftPlayer> {
   if (!username || typeof username !== 'string') {
@@ -35,7 +35,7 @@ export async function getPlayer(username: string, fullResult: boolean = false): 
   }
 }
 
-export async function getCharacters(username: string): Promise<WynncraftPlayer> {
+export async function getCharacters(username: string): Promise<Record<string, WynncraftPlayerCharacter>> {
   if (!username || typeof username !== 'string') {
     throw new TypeError('Username must be a non-empty string')
   }
@@ -55,7 +55,7 @@ export async function getCharacters(username: string): Promise<WynncraftPlayer> 
       throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
     }
 
-    return (await res.json()) as WynncraftPlayer
+    return (await res.json()) as Record<string, WynncraftPlayerCharacter>
   } catch (err) {
     if (
       err instanceof Error &&
