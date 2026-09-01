@@ -1,6 +1,6 @@
 {
   "name": "wynn.js",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Simple Wynncraft API wrapper",
   "type": "module",
   "main": "dist/index.js",
@@ -19,7 +19,9 @@
   ],
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "format": "prettier --write .",
+    "test": "tsx tests/errorHandling.test.ts",
     "test-players": "tsx tests/players.test.ts",
     "test-playersearch": "tsx tests/playerSearch.test.ts",
     "test-guilds": "tsx tests/guilds.test.ts",
@@ -42,8 +44,5 @@
     "prettier": "3.9.6",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2"
-  },
-  "allowScripts": {
-    "esbuild@0.28.2": true
   }
 }

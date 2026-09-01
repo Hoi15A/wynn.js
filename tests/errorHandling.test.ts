@@ -28,7 +28,10 @@ assert.throws(
     ),
   (err: unknown) => {
     assert.ok(err instanceof Error);
-    assert.match(err.message, /Unable to reach Wynncraft API\. Check your connection\./);
+    assert.match(
+      err.message,
+      /Unable to reach Wynncraft API\. Check your connection\./,
+    );
     assert.ok((err as Error & { cause?: unknown }).cause instanceof TypeError);
     return true;
   },
@@ -46,7 +49,11 @@ globalThis.fetch = async () =>
   });
 
 await assert.rejects(
-  () => fetchApiJson("https://api.wynncraft.com/v3/player/missing", 'Player "missing" not found'),
+  () =>
+    fetchApiJson(
+      "https://api.wynncraft.com/v3/player/missing",
+      'Player "missing" not found',
+    ),
   (err: unknown) => {
     assert.ok(err instanceof WynnApiError);
     assert.equal(err.status, 404);

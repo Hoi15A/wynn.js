@@ -22,6 +22,8 @@ export default {
   items,
 };
 
+export { WynnApiError } from "./http.js";
+
 export type * from "./types/generalTypes.js";
 export type * from "./types/guildTypes.js";
 export * from "./types/itemTypes.js";

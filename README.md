@@ -5,6 +5,9 @@ Currently does not cover all api endpoints
 
 Last Updated to the Api Version: v3.7.2
 
+This package is ESM-only. Use `import` (or `require()` on Node >= 22.12); there is
+no CommonJS build. Requires Node >= 20 for native `fetch`.
+
 # Example usage
 
 ## Players
@@ -19,11 +22,20 @@ wynn.players.get('Hoi_A').then(player => {
 }).catch(err => console.error(err))
 ```
 
+Get every character of a player by username:
+
+```js
+wynn.players.getCharacters('Hoi_A').then(characters => {
+  // returns an object keyed by character UUID, each value a character object
+  // as defined in the API Docs
+}).catch(err => console.error(err))
+```
+
 Search for all players on wynncraft:
 
 ```js
 wynn.players.search('salte').then(results => {
-  // returns array of usernames
+  // returns an array of usernames, or [] when there are no matches
 }).catch(err => console.error(err))
 ```
 

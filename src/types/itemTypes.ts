@@ -189,16 +189,34 @@ export enum WynncraftItemSet {
   Hallowynn2016 = "hallowynn2016",
 }
 
+// The Wynncraft API adds new subtypes, emblems, tiers and sets over time, so the
+// enums above are a convenience snapshot rather than an exhaustive list. The
+// `| (string & {})` unions keep the known members available for autocomplete
+// while still accepting any future value the API returns.
+export type WynncraftItemSubTypeName = WynncraftItemSubType | (string & {});
+export type WynncraftItemEmblemName = WynncraftItemEmblem | (string & {});
+export type WynncraftItemTierName = WynncraftItemTier | (string & {});
 export type WynncraftItemSetName = WynncraftItemSet | (string & {});
+
+export interface WynncraftItemIcon {
+  value:
+    | string
+    | {
+        id: string;
+        name: string;
+        customModelData?: unknown;
+      };
+  format: string;
+}
 
 export interface WynncraftItem {
   displayName: string;
   internalName: string;
   type: WynncraftItemType;
-  subType: WynncraftItemSubType;
-  Icon: object;
-  emblem: WynncraftItemEmblem;
-  tier: WynncraftItemTier;
+  subType: WynncraftItemSubTypeName;
+  icon: WynncraftItemIcon;
+  emblem: WynncraftItemEmblemName;
+  tier: WynncraftItemTierName;
   attackSpeed?: WynncraftItemAttackSpeed;
   averageDps?: number;
   restriction?: string;
