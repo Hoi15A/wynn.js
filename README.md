@@ -44,7 +44,7 @@ wynn.players.search('salte').then(results => {
 Search for a Guild by name:
 
 ```js
-wynn.guilds.get('Dragons Den').then(guilds => {
+wynn.guilds.get('Dragons Den').then(guild => {
   // returns object containing all Guild information as defined in the API Docs
 }).catch(err => console.error(err))
 ```
