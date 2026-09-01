@@ -22,7 +22,7 @@ export interface WynncraftPlayerGlobalData extends WynncraftGlobalData {
   raidStats: WynncraftRaidStats;
 }
 
-export interface WynncraftGuild {
+export interface WynncraftPlayerGuild {
   uuid: string;
   name: string;
   prefix: string;
@@ -67,7 +67,7 @@ export interface WynncraftPlayer {
   lastJoin: string | null;
   ranking: Record<string, number>;
   previousRanking: Record<string, number>;
-  guild: WynncraftGuild | null;
+  guild: WynncraftPlayerGuild | null;
   guildHistory: string[];
   firstJoin: string | null;
   playtime: number;

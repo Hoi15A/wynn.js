@@ -8,7 +8,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "files": [
@@ -18,6 +19,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "format": "prettier --write .",
     "test-players": "tsx tests/players.test.ts",
     "test-playersearch": "tsx tests/playerSearch.test.ts",
     "test-guilds": "tsx tests/guilds.test.ts",
@@ -32,6 +34,9 @@
     "Sebiann <code@sebiann.moe>"
   ],
   "license": "AGPL-3.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "devDependencies": {
     "@types/node": "^26.2.0",
     "prettier": "3.9.6",

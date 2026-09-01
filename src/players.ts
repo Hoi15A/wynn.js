@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "./config.js";
-import { fetchApiJson } from "./http.js";
+import { fetchApiJson, WynnApiError } from "./http.js";
 
 import type {
   WynncraftPlayer,
@@ -38,9 +38,17 @@ export async function searchPlayers(username: string): Promise<string[]> {
     throw new TypeError("Username must be a non-empty string");
   }
 
-  const data = await fetchApiJson<{
-    players: Record<string, { username: string }>;
-  }>(`${API_BASE_URL}/search/${encodeURIComponent(username)}?only=players`);
+  try {
+    const data = await fetchApiJson<{
+      players: Record<string, { username: string }>;
+    }>(`${API_BASE_URL}/search/${encodeURIComponent(username)}?only=players`);
 
-  return Object.values(data.players).map((player) => player.username);
+    return Object.values(data.players).map((player) => player.username);
+  } catch (err) {
+    if (err instanceof WynnApiError && err.status === 404) {
+      return [];
+    }
+
+    throw err;
+  }
 }

@@ -46,3 +46,23 @@ wynn.items.search('harp').then(items => {
   // returns all items that match the passed name
 }).catch(err => console.error(err))
 ```
+
+## Error handling
+
+HTTP errors are thrown as `WynnApiError` with a numeric `status` field.
+
+```js
+import wynn, { WynnApiError } from 'wynn.js'
+
+try {
+  await wynn.players.get('missing-user')
+} catch (err) {
+  if (err instanceof WynnApiError) {
+    if (err.status === 404) {
+      console.log('Not found')
+    } else if (err.status === 429) {
+      console.log('Rate limited')
+    }
+  }
+}
+```
